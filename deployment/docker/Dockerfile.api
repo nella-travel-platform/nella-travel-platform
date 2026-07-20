@@ -1,0 +1,21 @@
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+WORKDIR /app
+EXPOSE 8080
+
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+COPY ["backend/Nella.Api/Nella.Api.csproj", "backend/Nella.Api/"]
+COPY ["backend/Nella.Application/Nella.Application.csproj", "backend/Nella.Application/"]
+COPY ["backend/Nella.Infrastructure/Nella.Infrastructure.csproj", "backend/Nella.Infrastructure/"]
+COPY ["backend/Nella.Domain/Nella.Domain.csproj", "backend/Nella.Domain/"]
+COPY ["backend/Nella.Shared/Nella.Shared.csproj", "backend/Nella.Shared/"]
+COPY ["NellaTravelPlatform.sln", "./"]
+RUN dotnet restore "NellaTravelPlatform.sln"
+COPY . .
+WORKDIR /src/backend/Nella.Api
+RUN dotnet publish "Nella.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "Nella.Api.dll"]

@@ -1,0 +1,51 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nella.Api", "backend\Nella.Api\Nella.Api.csproj", "{5D91EE7E-D6E6-4C43-9C8F-7C430CB1D0A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nella.Application", "backend\Nella.Application\Nella.Application.csproj", "{B16B8D21-B62C-4BB9-86DB-422F5CB4C33A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nella.Domain", "backend\Nella.Domain\Nella.Domain.csproj", "{2D1482B7-6BB4-4D2A-A20C-9F1D4688683F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nella.Infrastructure", "backend\Nella.Infrastructure\Nella.Infrastructure.csproj", "{5A4D9E11-8707-40E5-BB8F-F90D7767A6B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nella.Shared", "backend\Nella.Shared\Nella.Shared.csproj", "{8F9C06D1-2875-4F5B-BC4B-A95A3458C23B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nella.Tests", "backend\Nella.Tests\Nella.Tests.csproj", "{B1B6CA05-0F11-47B6-9F23-8C2389118182}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5D91EE7E-D6E6-4C43-9C8F-7C430CB1D0A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D91EE7E-D6E6-4C43-9C8F-7C430CB1D0A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D91EE7E-D6E6-4C43-9C8F-7C430CB1D0A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D91EE7E-D6E6-4C43-9C8F-7C430CB1D0A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B16B8D21-B62C-4BB9-86DB-422F5CB4C33A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B16B8D21-B62C-4BB9-86DB-422F5CB4C33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B16B8D21-B62C-4BB9-86DB-422F5CB4C33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B16B8D21-B62C-4BB9-86DB-422F5CB4C33A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D1482B7-6BB4-4D2A-A20C-9F1D4688683F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D1482B7-6BB4-4D2A-A20C-9F1D4688683F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D1482B7-6BB4-4D2A-A20C-9F1D4688683F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D1482B7-6BB4-4D2A-A20C-9F1D4688683F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A4D9E11-8707-40E5-BB8F-F90D7767A6B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A4D9E11-8707-40E5-BB8F-F90D7767A6B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A4D9E11-8707-40E5-BB8F-F90D7767A6B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A4D9E11-8707-40E5-BB8F-F90D7767A6B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F9C06D1-2875-4F5B-BC4B-A95A3458C23B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F9C06D1-2875-4F5B-BC4B-A95A3458C23B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F9C06D1-2875-4F5B-BC4B-A95A3458C23B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F9C06D1-2875-4F5B-BC4B-A95A3458C23B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1B6CA05-0F11-47B6-9F23-8C2389118182}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1B6CA05-0F11-47B6-9F23-8C2389118182}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1B6CA05-0F11-47B6-9F23-8C2389118182}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1B6CA05-0F11-47B6-9F23-8C2389118182}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
