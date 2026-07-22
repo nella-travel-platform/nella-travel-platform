@@ -1,27 +1,37 @@
 import { formatRentalDateTime } from "../../lib/rental-time";
+import { getServiceLocation } from "../../lib/location-delivery";
 
 type Props = {
   pickupLocation: string;
+  returnLocation: string;
   pickupDate?: string;
   pickupTime?: string;
   returnDate?: string;
   returnTime?: string;
   category?: string;
-};
-
-const locations: Record<string, string> = {
-  "cancun-airport": "Cancun Airport",
-  "hotel-zone": "Cancun Hotel Zone",
-  "downtown-cancun": "Downtown Cancun",
-  "playa-del-carmen": "Playa del Carmen",
+  categoryValue?: string;
 };
 
 export default function VehicleSearchSummary(props: Props) {
+  const query = new URLSearchParams({
+    pickupLocation: props.pickupLocation,
+    returnLocation: props.returnLocation,
+    pickupDate: props.pickupDate ?? "",
+    pickupTime: props.pickupTime ?? "",
+    returnDate: props.returnDate ?? "",
+    returnTime: props.returnTime ?? "",
+    category: props.categoryValue ?? "",
+  });
+
   return (
     <section className="vehicle-summary">
       <div>
         <span>Pickup location</span>
-        <strong>{locations[props.pickupLocation] ?? "Cancun Airport"}</strong>
+        <strong>{getServiceLocation(props.pickupLocation).label}</strong>
+      </div>
+      <div>
+        <span>Return location</span>
+        <strong>{getServiceLocation(props.returnLocation).label}</strong>
       </div>
       <div>
         <span>Pickup</span>
@@ -35,7 +45,7 @@ export default function VehicleSearchSummary(props: Props) {
         <span>Category</span>
         <strong>{props.category || "Any category"}</strong>
       </div>
-      <a href="/#search">Modify search</a>
+      <a href={`/?${query.toString()}#search`}>Modify search</a>
     </section>
   );
 }

@@ -12,6 +12,7 @@ type Props = {
     returnDate?: string;
     returnTime?: string;
     pickupLocation?: string;
+    returnLocation?: string;
   };
 };
 
@@ -21,17 +22,6 @@ export default function BookingPage({ searchParams }: Props) {
   return (
     <main className="booking-page">
       <Navbar />
-      <section className="booking-hero">
-        <div className="home-container">
-          <span className="eyebrow hero-eyebrow">Secure reservation</span>
-          <h1>Complete your booking.</h1>
-          <p>
-            Review your trip, enter the driver information and reserve the vehicle
-            with one day&apos;s rent.
-          </p>
-        </div>
-      </section>
-
       <div className="home-container booking-shell">
         {vehicle ? (
           <BookingWizard
@@ -42,14 +32,16 @@ export default function BookingPage({ searchParams }: Props) {
             returnDate={searchParams.returnDate ?? ""}
             returnTime={searchParams.returnTime ?? ""}
             pickupLocation={searchParams.pickupLocation ?? "cancun-airport"}
+            returnLocation={
+              searchParams.returnLocation ??
+              searchParams.pickupLocation ??
+              "cancun-airport"
+            }
           />
         ) : (
           <section className="booking-empty">
             <h2>No vehicle selected</h2>
-            <p>Please return to the vehicle search and select a vehicle first.</p>
-            <a className="primary-button booking-link-button" href="/vehicles">
-              Search vehicles
-            </a>
+            <a href="/vehicles">Search vehicles</a>
           </section>
         )}
       </div>

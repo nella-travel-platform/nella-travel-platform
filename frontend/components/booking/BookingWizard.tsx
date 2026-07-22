@@ -4,6 +4,10 @@ import { FormEvent, useMemo, useState } from "react";
 import type { Vehicle } from "../../lib/vehicle-catalog";
 import PaymentSection from "./PaymentSection";
 import { getPartnerRentalPolicy } from "../../lib/partner-rental-policy";
+import {
+  calculateDeliveryFees,
+  getServiceLocation,
+} from "../../lib/location-delivery";
 import { formatRentalDateTime } from "../../lib/rental-time";
 import {
   bookingExtras,
@@ -19,10 +23,12 @@ type Props = {
   returnDate: string;
   returnTime: string;
   pickupLocation: string;
+  returnLocation: string;
 };
 
 type PaymentTiming = "deposit-only" | "pay-full-now";
 type PaymentMethod = "card" | "paypal" | "mercado-pago";
+type NotificationMethod = "whatsapp" | "sms" | "email";
 
 type FormState = {
   firstName: string;
@@ -39,8 +45,9 @@ type FormState = {
   insurance: boolean;
   specialRequests: string;
   termsAccepted: boolean;
-  paymentTiming: PaymentTiming;
+  paymentTiming: PaymentTiming | null;
   paymentMethod: PaymentMethod;
+  notificationMethod: NotificationMethod;
 };
 
 const currency = new Intl.NumberFormat("en-US", {
@@ -71,8 +78,9 @@ const initialState: FormState = {
   insurance: false,
   specialRequests: "",
   termsAccepted: false,
-  paymentTiming: "deposit-only",
+  paymentTiming: null,
   paymentMethod: "card",
+  notificationMethod: "whatsapp",
 };
 
 export default function BookingWizard({
@@ -83,6 +91,7 @@ export default function BookingWizard({
   returnDate,
   returnTime,
   pickupLocation,
+  returnLocation,
 }: Props) {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState(initialState);
@@ -103,14 +112,20 @@ export default function BookingWizard({
     [selectedExtras, rentalDays],
   );
 
+  const delivery = calculateDeliveryFees(pickupLocation, returnLocation);
   const rentalSubtotal = vehicle.dailyRate * rentalDays;
-  const estimatedTotal = rentalSubtotal + extrasTotal;
+  const estimatedTotal = rentalSubtotal + extrasTotal + delivery.totalFee;
   const reservationDeposit = vehicle.dailyRate;
   const amountDueNow =
     form.paymentTiming === "pay-full-now"
       ? estimatedTotal
-      : reservationDeposit;
-  const remainingBalance = Math.max(estimatedTotal - amountDueNow, 0);
+      : form.paymentTiming === "deposit-only"
+        ? reservationDeposit
+        : null;
+  const remainingBalance =
+    amountDueNow === null
+      ? estimatedTotal
+      : Math.max(estimatedTotal - amountDueNow, 0);
   const latePolicy = getPartnerRentalPolicy("partner-demo-1");
 
   function update<K extends keyof FormState>(field: K, value: FormState[K]) {
@@ -128,7 +143,7 @@ export default function BookingWizard({
       );
     }
     if (step === 2) return true;
-    if (step === 3) return form.termsAccepted;
+    if (step === 3) return Boolean(form.paymentTiming && form.termsAccepted);
     return true;
   }
 
@@ -182,7 +197,7 @@ export default function BookingWizard({
           </div>
           <div>
             <span>Amount due now</span>
-            <strong>{currency.format(amountDueNow)}</strong>
+            <strong>{currency.format(amountDueNow ?? 0)}</strong>
           </div>
           <div>
             <span>Remaining balance</span>
@@ -331,8 +346,9 @@ export default function BookingWizard({
                   <small>{formatRentalDateTime(pickupDate, pickupTime)}</small>
                 </div>
                 <div>
-                  <span>Return</span>
-                  <strong>{formatRentalDateTime(returnDate, returnTime)}</strong>
+                  <span>Return location</span>
+                  <strong>{getServiceLocation(returnLocation).label}</strong>
+                  <small>{formatRentalDateTime(returnDate, returnTime)}</small>
                   <small>
                     {rentalDays} billable 24-hour day{rentalDays === 1 ? "" : "s"}
                   </small>
@@ -342,6 +358,66 @@ export default function BookingWizard({
                   <strong>{form.flightNumber || "Not provided"}</strong>
                   <small>{form.arrivalTime || "Time not provided"}</small>
                 </div>
+              </div>
+
+              <div className="delivery-fee-summary">
+                <span className="eyebrow">Pickup and return delivery</span>
+                <h3>
+                  {getServiceLocation(pickupLocation).label} →{" "}
+                  {getServiceLocation(returnLocation).label}
+                </h3>
+                {delivery.requiresQuote ? (
+                  <p>
+                    One of the selected locations requires a custom delivery
+                    quote before the reservation is finalized.
+                  </p>
+                ) : (
+                  <p>
+                    Pickup fee: {currency.format(delivery.pickupFee)} · Return
+                    fee: {currency.format(delivery.returnFee)} · Total delivery
+                    fees: {currency.format(delivery.totalFee)}
+                  </p>
+                )}
+              </div>
+
+              <div className="notification-choice">
+                <span className="eyebrow">Reservation notifications</span>
+                <h3>How should we contact you?</h3>
+                <div className="notification-methods">
+                  {[
+                    ["whatsapp", "Text / WhatsApp"],
+                    ["sms", "Text message"],
+                    ["email", "Email"],
+                  ].map(([value, label]) => (
+                    <label key={value}>
+                      <input
+                        type="radio"
+                        name="notificationMethod"
+                        value={value}
+                        checked={form.notificationMethod === value}
+                        onChange={() =>
+                          update(
+                            "notificationMethod",
+                            value as NotificationMethod,
+                          )
+                        }
+                      />
+                      <span>{label}</span>
+                    </label>
+                  ))}
+                </div>
+                <small>
+                  Text / WhatsApp is selected by default. Message and carrier
+                  rates may apply. You may change this preference later.
+                </small>
+              </div>
+
+              <div className="balance-separation-note">
+                <strong>Important:</strong> the remaining rental balance and the
+                refundable damage deposit are separate, independent charges.
+                When the customer chooses deposit-only, both are due at pickup,
+                but the damage deposit is not included in the remaining rental
+                balance shown above.
               </div>
 
               <div className="payment-choice">
@@ -378,23 +454,25 @@ export default function BookingWizard({
                     <strong>Pay rental balance now</strong>
                     <small>
                       Pay the full rental amount of {currency.format(estimatedTotal)} now.
-                      The refundable damage deposit remains due at pickup.
+                      The additional refundable damage deposit remains due at pickup and is not included in this amount.
                     </small>
                   </span>
                 </label>
               </div>
 
-              <PaymentSection
-                paymentTiming={form.paymentTiming}
-                paymentMethod={form.paymentMethod}
-                amountDueNow={amountDueNow}
-                onPaymentMethodChange={(method) =>
-                  update("paymentMethod", method)
-                }
-              />
+              {form.paymentTiming && amountDueNow !== null && (
+                <PaymentSection
+                  paymentTiming={form.paymentTiming}
+                  paymentMethod={form.paymentMethod}
+                  amountDueNow={amountDueNow}
+                  onPaymentMethodChange={(method) =>
+                    update("paymentMethod", method)
+                  }
+                />
+              )}
 
               <div className="late-policy-box">
-                <span className="eyebrow">Partner late-return policy</span>
+                <span className="eyebrow">Partner rental-time policy</span>
                 <h3>{latePolicy.partnerName}</h3>
                 <ul>
                   <li>
@@ -428,7 +506,10 @@ export default function BookingWizard({
 
           <div className="booking-actions">
             {step > 1 && (
-              <button className="secondary-booking-button" type="button" onClick={() => setStep((current) => current - 1)}>
+              <button className="secondary-booking-button" type="button" onClick={() => {
+                setStep((current) => current - 1);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}>
                 Back
               </button>
             )}
@@ -460,37 +541,65 @@ export default function BookingWizard({
                 {extra.name}
                 <small className="summary-charge-mode">
                   {extra.chargeMode === "included"
-                    ? "Included"
+                    ? "Included · No charge"
                     : extra.chargeMode === "trip"
-                      ? "One-time"
-                      : "Daily"}
+                      ? `1 trip × ${currency.format(extra.amount)}`
+                      : `${rentalDays} days × ${currency.format(extra.amount)} daily rate`}
                 </small>
               </dt>
               <dd>{currency.format(calculateExtraTotal(extra, rentalDays))}</dd>
             </div>
           ))}
+          {delivery.totalFee > 0 && (
+            <div>
+              <dt>Pickup / return delivery fees</dt>
+              <dd>{currency.format(delivery.totalFee)}</dd>
+            </div>
+          )}
           <div>
-            <dt>Estimated total</dt>
+            <dt>Estimated rental total</dt>
             <dd>{currency.format(estimatedTotal)}</dd>
           </div>
-          <div className="deposit-row">
-            <dt>Amount due now</dt>
-            <dd>{currency.format(amountDueNow)}</dd>
-          </div>
+          {step < 3 && (
+            <>
+              <div className="deposit-row">
+                <dt>Pay to reserve — one rental day</dt>
+                <dd>{currency.format(reservationDeposit)}</dd>
+              </div>
+              <div>
+                <dt>Estimated remaining rental balance</dt>
+                <dd>{currency.format(estimatedTotal - reservationDeposit)}</dd>
+              </div>
+            </>
+          )}
+          {step === 3 && amountDueNow === null && (
+            <div className="deposit-row payment-selection-pending">
+              <dt>Select a payment preference to calculate the amount due now</dt>
+              <dd>Pending</dd>
+            </div>
+          )}
+          {step === 3 && amountDueNow !== null && (
+            <>
+              <div className="deposit-row">
+                <dt>Amount due now</dt>
+                <dd>{currency.format(amountDueNow)}</dd>
+              </div>
+              <div>
+                <dt>Remaining rental balance at pickup</dt>
+                <dd>{currency.format(remainingBalance)}</dd>
+              </div>
+            </>
+          )}
           <div>
-            <dt>Remaining balance at pickup</dt>
-            <dd>{currency.format(remainingBalance)}</dd>
-          </div>
-          <div>
-            <dt>Refundable damage deposit</dt>
+            <dt>Additional refundable damage deposit due at pickup</dt>
             <dd>{currency.format(vehicle.damageDeposit)}</dd>
           </div>
         </dl>
 
         <p>
-          The refundable damage deposit is separate from the rental total and
-          remains due at pickup. The selected return time is the due time; late
-          returns may result in a half-day or full-day charge.
+          The remaining rental balance and refundable damage deposit are
+          separate charges. The damage deposit is not included in the remaining
+          balance. Both may be due at pickup depending on the payment selection.
         </p>
       </aside>
     </div>

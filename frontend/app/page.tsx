@@ -1,15 +1,27 @@
-import Navbar from "../components/layout/Navbar";
-import Hero from "../components/home/Hero";
-import Services from "../components/home/Services";
-import WhyChooseUs from "../components/home/WhyChooseUs";
-import Testimonials from "../components/home/Testimonials";
 import Footer from "../components/layout/Footer";
+import Hero from "../components/home/Hero";
+import Navbar from "../components/layout/Navbar";
+import Services from "../components/home/Services";
+import Testimonials from "../components/home/Testimonials";
+import WhyChooseUs from "../components/home/WhyChooseUs";
 
-export default function HomePage() {
+type Props = {
+  searchParams: {
+    pickupLocation?: string;
+    returnLocation?: string;
+    pickupDate?: string;
+    pickupTime?: string;
+    returnDate?: string;
+    returnTime?: string;
+    category?: string;
+  };
+};
+
+export default function Home({ searchParams }: Props) {
   return (
-    <main className="home-page">
+    <main>
       <Navbar />
-      <Hero />
+      <Hero initialSearch={searchParams} />
       <Services />
       <WhyChooseUs />
       <Testimonials />

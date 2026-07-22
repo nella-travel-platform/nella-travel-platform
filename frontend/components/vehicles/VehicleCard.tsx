@@ -4,6 +4,7 @@ type Props = {
   vehicle: Vehicle;
   rentalDays: number;
   pickupLocation: string;
+  returnLocation: string;
   pickupDate?: string;
   pickupTime?: string;
   returnDate?: string;
@@ -20,6 +21,7 @@ export default function VehicleCard({
   vehicle,
   rentalDays,
   pickupLocation,
+  returnLocation,
   pickupDate,
   pickupTime,
   returnDate,
@@ -28,6 +30,7 @@ export default function VehicleCard({
   const total = vehicle.dailyRate * rentalDays;
   const query = new URLSearchParams({
     pickupLocation,
+    returnLocation,
     pickupDate: pickupDate ?? "",
     pickupTime: pickupTime ?? "",
     returnDate: returnDate ?? "",
@@ -86,9 +89,6 @@ export default function VehicleCard({
         >
           View vehicle
         </a>
-        <small className="reservation-note">
-          Reservation deposit: one 24-hour rental day
-        </small>
       </div>
     </article>
   );

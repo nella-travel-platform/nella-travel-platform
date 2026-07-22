@@ -3,11 +3,13 @@ import Navbar from "../../components/layout/Navbar";
 import VehicleCard from "../../components/vehicles/VehicleCard";
 import VehicleSearchSummary from "../../components/vehicles/VehicleSearchSummary";
 import { categoryOptions, vehicles } from "../../lib/vehicle-catalog";
-import { calculateRentalDuration } from "../../lib/rental-time";
+import { getPartnerRentalPolicy } from "../../lib/partner-rental-policy";
+import { calculateRequestedRentalBilling } from "../../lib/requested-rental-billing";
 
 type Props = {
   searchParams: {
     pickupLocation?: string;
+    returnLocation?: string;
     pickupDate?: string;
     pickupTime?: string;
     returnDate?: string;
@@ -20,15 +22,28 @@ type Props = {
 
 export default function VehiclesPage({ searchParams }: Props) {
   const pickupLocation = searchParams.pickupLocation ?? "cancun-airport";
+  const returnLocation = searchParams.returnLocation ?? pickupLocation;
   const category = searchParams.category ?? "";
-  const transmission = searchParams.transmission ?? "";
+  const requestedTransmission = searchParams.transmission ?? "";
   const minimumPassengers = Number(searchParams.passengers ?? "0");
+  const availableTransmissions = Array.from(
+    new Set(
+      vehicles
+        .filter((vehicle) => vehicle.available)
+        .map((vehicle) => vehicle.transmission.toLowerCase()),
+    ),
+  );
+  const transmission = availableTransmissions.includes(requestedTransmission)
+    ? requestedTransmission
+    : "";
 
-  const duration = calculateRentalDuration(
+  const partnerPolicy = getPartnerRentalPolicy("partner-demo-1");
+  const billing = calculateRequestedRentalBilling(
     searchParams.pickupDate,
     searchParams.pickupTime,
     searchParams.returnDate,
     searchParams.returnTime,
+    partnerPolicy,
   );
 
   const filteredVehicles = vehicles.filter((vehicle) =>
@@ -46,33 +61,21 @@ export default function VehiclesPage({ searchParams }: Props) {
     <main className="vehicles-page">
       <Navbar />
 
-      <section className="vehicle-results-hero">
-        <div className="home-container">
-          <span className="eyebrow hero-eyebrow">Vehicle search</span>
-          <h1>Available rentals for your Cancún trip.</h1>
-          <p>
-            Pricing is based on complete 24-hour rental periods rather than
-            charging each calendar date as a separate day.
-          </p>
-        </div>
-      </section>
-
       <div className="home-container vehicle-results-layout">
         <VehicleSearchSummary
           pickupLocation={pickupLocation}
+          returnLocation={returnLocation}
           pickupDate={searchParams.pickupDate}
           pickupTime={searchParams.pickupTime}
           returnDate={searchParams.returnDate}
           returnTime={searchParams.returnTime}
           category={categoryLabel}
+          categoryValue={category}
         />
 
-        <div className="rental-clock-notice">
+        <div className={`rental-clock-notice billing-${billing.tier}`}>
           <strong>24-hour pricing advantage</strong>
-          <span>
-            Your rental day runs from the selected pickup time until the same
-            time the following day.
-          </span>
+          <span>{billing.explanation}</span>
         </div>
 
         <div className="vehicle-content-grid">
@@ -81,6 +84,7 @@ export default function VehiclesPage({ searchParams }: Props) {
 
             <form action="/vehicles" method="get">
               <input type="hidden" name="pickupLocation" value={pickupLocation} />
+              <input type="hidden" name="returnLocation" value={returnLocation} />
               <input type="hidden" name="pickupDate" value={searchParams.pickupDate ?? ""} />
               <input type="hidden" name="pickupTime" value={searchParams.pickupTime ?? ""} />
               <input type="hidden" name="returnDate" value={searchParams.returnDate ?? ""} />
@@ -101,25 +105,33 @@ export default function VehiclesPage({ searchParams }: Props) {
                 Transmission
                 <select name="transmission" defaultValue={transmission}>
                   <option value="">Any transmission</option>
-                  <option value="automatic">Automatic</option>
-                  <option value="manual">Manual</option>
+                  {availableTransmissions.map((item) => (
+                    <option key={item} value={item}>
+                      {item.charAt(0).toUpperCase() + item.slice(1)}
+                    </option>
+                  ))}
                 </select>
               </label>
 
-              <label>
-                Minimum passengers
-                <select
-                  name="passengers"
-                  defaultValue={searchParams.passengers ?? ""}
-                >
-                  <option value="">Any capacity</option>
-                  <option value="4">4 passengers</option>
-                  <option value="5">5 passengers</option>
-                  <option value="7">7 passengers</option>
-                  <option value="8">8 passengers</option>
-                  <option value="10">10+ passengers</option>
-                </select>
-              </label>
+              {!category && (
+                <label>
+                  Minimum passenger capacity
+                  <select
+                    name="passengers"
+                    defaultValue={searchParams.passengers ?? ""}
+                  >
+                    <option value="">Any capacity</option>
+                    <option value="4">At least 4 passengers</option>
+                    <option value="5">At least 5 passengers</option>
+                    <option value="7">At least 7 passengers</option>
+                    <option value="8">At least 8 passengers</option>
+                    <option value="10">At least 10 passengers</option>
+                  </select>
+                  <small>
+                    Used only when searching across all vehicle categories.
+                  </small>
+                </label>
+              )}
 
               <button className="primary-button full-width" type="submit">
                 Apply filters
@@ -130,40 +142,30 @@ export default function VehiclesPage({ searchParams }: Props) {
           <section className="vehicle-results">
             <div className="results-heading">
               <div>
-                <span>
-                  {filteredVehicles.length} result
-                  {filteredVehicles.length === 1 ? "" : "s"}
-                </span>
+                <span>{filteredVehicles.length} result{filteredVehicles.length === 1 ? "" : "s"}</span>
                 <h2>Choose your vehicle category</h2>
               </div>
               <span>
-                {duration.billableDays} billable 24-hour day
-                {duration.billableDays === 1 ? "" : "s"}
+                {billing.billableDays} billable rental day
+                {billing.billableDays === 1 ? "" : "s"}
               </span>
             </div>
 
-            {filteredVehicles.length ? (
-              <div className="vehicle-list">
-                {filteredVehicles.map((vehicle) => (
-                  <VehicleCard
-                    key={vehicle.id}
-                    vehicle={vehicle}
-                    rentalDays={duration.billableDays}
-                    pickupLocation={pickupLocation}
-                    pickupDate={searchParams.pickupDate}
-                    pickupTime={searchParams.pickupTime}
-                    returnDate={searchParams.returnDate}
-                    returnTime={searchParams.returnTime}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="empty-results">
-                <h2>No vehicles match these filters.</h2>
-                <p>Try another category, transmission or passenger capacity.</p>
-                <a href="/vehicles">Clear filters</a>
-              </div>
-            )}
+            <div className="vehicle-list">
+              {filteredVehicles.map((vehicle) => (
+                <VehicleCard
+                  key={vehicle.id}
+                  vehicle={vehicle}
+                  rentalDays={billing.billableDays}
+                  pickupLocation={pickupLocation}
+                  returnLocation={returnLocation}
+                  pickupDate={searchParams.pickupDate}
+                  pickupTime={searchParams.pickupTime}
+                  returnDate={searchParams.returnDate}
+                  returnTime={searchParams.returnTime}
+                />
+              ))}
+            </div>
           </section>
         </div>
       </div>

@@ -1,0 +1,64 @@
+.notification-methods {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .75rem;
+}
+
+.notification-methods label {
+  display: flex !important;
+  align-items: center;
+  gap: .65rem;
+  min-height: 58px;
+  padding: .85rem 1rem;
+  border: 1px solid var(--home-border);
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+}
+
+.notification-methods input[type="radio"] {
+  flex: 0 0 auto;
+  width: 18px !important;
+  height: 18px !important;
+  min-height: 0 !important;
+  margin: 0;
+  padding: 0;
+}
+
+.notification-methods span {
+  font-weight: 800;
+}
+
+.billing-grace {
+  border-color: #b9e6cf;
+  background: #edf9f2;
+}
+
+.billing-half-day {
+  border-color: #f0d999;
+  background: #fff8e5;
+}
+
+.billing-full-day {
+  border-color: #efc0b9;
+  background: #fff2ef;
+}
+
+.payment-selection-pending {
+  color: var(--home-muted);
+  background: #eef3f6 !important;
+}
+
+.payment-selection-pending dd {
+  font-size: .9rem !important;
+}
+
+.summary-charge-mode {
+  line-height: 1.4;
+}
+
+@media (max-width: 760px) {
+  .notification-methods {
+    grid-template-columns: 1fr;
+  }
+}
