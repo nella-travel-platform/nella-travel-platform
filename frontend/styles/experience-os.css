@@ -1,0 +1,58 @@
+:root {
+  --ec-ocean: #075985;
+  --ec-ocean-dark: #0c3b5a;
+  --ec-turquoise: #0e9f9a;
+  --ec-sunset: #f97316;
+  --ec-palm: #15803d;
+  --ec-sand: #fff8ec;
+  --ec-navy: #102a43;
+  --ec-muted: #5c6b7a;
+  --ec-border: #d9e2ec;
+  --ec-white: #ffffff;
+  --ec-radius-lg: 1.25rem;
+  --ec-radius-pill: 999px;
+  --ec-shadow-sm: 0 2px 8px rgba(16, 42, 67, 0.08);
+  --ec-container: 1200px;
+}
+
+body {
+  color: var(--ec-navy);
+  background: var(--ec-white);
+}
+
+.ec-container {
+  width: min(calc(100% - 2rem), var(--ec-container));
+  margin-inline: auto;
+}
+
+.ec-section {
+  padding-block: clamp(3rem, 7vw, 6rem);
+}
+
+.ec-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.ec-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ec-card {
+  border: 1px solid var(--ec-border);
+  border-radius: var(--ec-radius-lg);
+  background: var(--ec-white);
+  box-shadow: var(--ec-shadow-sm);
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--ec-turquoise);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .ec-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}

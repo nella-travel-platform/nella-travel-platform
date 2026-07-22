@@ -1,24 +1,18 @@
-import Navbar from "./components/layout/Navbar";
-import Hero from "./components/home/Hero";
-import Services from "./components/home/Services";
-import WhyChooseUs from "./components/home/WhyChooseUs";
-import Testimonials from "./components/home/Testimonials";
-import Footer from "./components/layout/Footer";
-
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white">
-      <Navbar />
+    <main
+      style={{
+        padding: 40,
+        fontFamily: "Arial, Helvetica, sans-serif",
+      }}
+    >
+      <h1>Experience Cancun</h1>
 
-      <Hero />
+      <p>Welcome to Experience Cancun.</p>
 
-      <Services />
+      <p>The Design System is installed successfully.</p>
 
-      <WhyChooseUs />
-
-      <Testimonials />
-
-      <Footer />
+      <a href="/design-system">Open Design System →</a>
     </main>
   );
 }
