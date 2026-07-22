@@ -5,6 +5,10 @@
 @import "../styles/experience-os.css";
 @import "../styles/home.css";
 @import "../styles/vehicles.css";
+@import "../styles/booking.css";
+@import "../styles/booking-options.css";
+@import "../styles/rental-time.css";
+@import "../styles/payment-and-policy.css";
 
 html,
 body {

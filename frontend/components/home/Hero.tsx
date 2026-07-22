@@ -13,9 +13,15 @@ export default function Hero() {
         <div className="hero-copy">
           <span className="eyebrow hero-eyebrow">Cancún, Mexico</span>
           <h1>Everything you need for an unforgettable Cancún vacation.</h1>
-          <p>Book local car rentals, airport transfers, tours and vacation experiences through one trusted platform.</p>
+          <p>
+            Book local car rentals, airport transfers, tours and vacation
+            experiences through one trusted platform.
+          </p>
+
           <div className="hero-trust">
-            <span>✓ No hidden fees</span><span>✓ Local support</span><span>✓ Airport delivery</span>
+            <span>✓ True 24-hour rental days</span>
+            <span>✓ No hidden fees</span>
+            <span>✓ Airport delivery</span>
           </div>
         </div>
 
@@ -24,7 +30,9 @@ export default function Hero() {
             <span className="eyebrow">Find a vehicle</span>
             <h2>Search available rentals</h2>
           </div>
-          <label>Pickup location
+
+          <label>
+            Pickup location
             <select name="pickupLocation" defaultValue="cancun-airport">
               <option value="cancun-airport">Cancun Airport</option>
               <option value="hotel-zone">Cancun Hotel Zone</option>
@@ -32,18 +40,46 @@ export default function Hero() {
               <option value="playa-del-carmen">Playa del Carmen</option>
             </select>
           </label>
+
           <div className="form-grid">
-            <label>Pickup date<input name="pickupDate" type="date" required /></label>
-            <label>Return date<input name="returnDate" type="date" required /></label>
+            <label>
+              Pickup date
+              <input name="pickupDate" type="date" required />
+            </label>
+            <label>
+              Pickup time
+              <input name="pickupTime" type="time" required />
+            </label>
+            <label>
+              Return date
+              <input name="returnDate" type="date" required />
+            </label>
+            <label>
+              Return time
+              <input name="returnTime" type="time" required />
+            </label>
           </div>
-          <label>Vehicle category
+
+          <label>
+            Vehicle category
             <select name="category" defaultValue="">
               <option value="">Any category</option>
-              {categories.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+              {categories.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
             </select>
           </label>
-          <button className="primary-button full-width" type="submit">Search vehicles</button>
-          <p className="form-note">Reserve with one day&apos;s rent. The remaining balance is paid before or at pickup.</p>
+
+          <button className="primary-button full-width" type="submit">
+            Search vehicles
+          </button>
+
+          <p className="form-note">
+            Every 24 hours counts as one rental day. Returning after the selected
+            time may result in a half-day or full-day late charge.
+          </p>
         </form>
       </div>
     </section>

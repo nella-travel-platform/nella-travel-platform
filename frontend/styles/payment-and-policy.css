@@ -1,0 +1,224 @@
+.payment-section,
+.late-policy-box {
+  margin-top: 1.4rem;
+  padding: 1.2rem;
+  border: 1px solid var(--home-border);
+  border-radius: 16px;
+  background: #fbfdfe;
+}
+
+.payment-section h3,
+.late-policy-box h3 {
+  margin: .3rem 0 1rem;
+  font-size: 1.25rem;
+}
+
+.payment-method-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .75rem;
+}
+
+.payment-method-grid label {
+  grid-template-columns: auto 1fr !important;
+  align-items: start;
+  padding: 1rem;
+  border: 1px solid var(--home-border);
+  border-radius: 13px;
+  background: white;
+  cursor: pointer;
+}
+
+.payment-method-grid label.selected {
+  border-color: var(--home-turquoise);
+  box-shadow: 0 0 0 3px rgba(14,159,154,.12);
+}
+
+.payment-method-grid input {
+  width: 18px;
+  min-height: auto;
+  margin-top: .15rem;
+}
+
+.payment-method-grid strong,
+.payment-method-grid small {
+  display: block;
+}
+
+.payment-method-grid small {
+  margin-top: .3rem;
+  color: var(--home-muted);
+  font-weight: 400;
+}
+
+.mock-card-fields,
+.policy-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.payment-disclaimer,
+.policy-saved-message {
+  margin: 1rem 0 0;
+  color: var(--home-muted);
+  font-size: .82rem;
+  line-height: 1.5;
+}
+
+.late-policy-box ul {
+  display: grid;
+  gap: .5rem;
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--home-muted);
+  line-height: 1.55;
+}
+
+.partner-policy-hero {
+  padding-block: 4rem;
+  color: white;
+  background: linear-gradient(135deg,var(--home-ocean-dark),var(--home-ocean));
+}
+
+.partner-policy-hero h1 {
+  margin: 0;
+  font-size: clamp(2.6rem,6vw,4.8rem);
+  line-height: 1;
+}
+
+.partner-policy-hero p {
+  max-width: 720px;
+  color: #dcecf4;
+  line-height: 1.7;
+}
+
+.partner-policy-shell {
+  padding-block: 3rem 5rem;
+}
+
+.partner-policy-layout {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 360px;
+  align-items: start;
+  gap: 2rem;
+}
+
+.policy-editor-card,
+.policy-test-card {
+  padding: 1.5rem;
+  border: 1px solid var(--home-border);
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(16,42,67,.07);
+}
+
+.policy-editor-card h2,
+.policy-test-card h2 {
+  margin: .25rem 0 1.2rem;
+}
+
+.policy-form-grid label,
+.policy-test-card label {
+  display: grid;
+  gap: .4rem;
+  font-size: .88rem;
+  font-weight: 800;
+}
+
+.policy-form-grid input,
+.policy-test-card input {
+  min-height: 46px;
+  padding: .75rem;
+  border: 1px solid var(--home-border);
+  border-radius: 11px;
+  font: inherit;
+}
+
+.policy-test-card label + label {
+  margin-top: 1rem;
+}
+
+.policy-rule-preview {
+  margin-top: 1.2rem;
+  padding: 1rem;
+  border-radius: 14px;
+  background: var(--home-sand);
+}
+
+.policy-rule-preview h3 {
+  margin: 0 0 .7rem;
+}
+
+.policy-rule-preview ol {
+  display: grid;
+  gap: .5rem;
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--home-muted);
+  line-height: 1.55;
+}
+
+.policy-save-button {
+  margin-top: 1.2rem;
+  min-height: 50px;
+  padding-inline: 1.4rem;
+}
+
+.late-result {
+  margin-top: 1.2rem;
+  padding: 1.2rem;
+  border-radius: 14px;
+  background: #f5f8fa;
+}
+
+.late-result span,
+.late-result strong {
+  display: block;
+}
+
+.late-result span {
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: .75rem;
+  font-weight: 900;
+}
+
+.late-result strong {
+  margin-top: .25rem;
+  font-size: 2rem;
+}
+
+.late-result p {
+  margin: .5rem 0 0;
+  color: var(--home-muted);
+}
+
+.late-result.none {
+  background: #e8f8ee;
+}
+
+.late-result.half-day {
+  background: #fff7df;
+}
+
+.late-result.full-day {
+  background: #fff0ed;
+}
+
+@media(max-width:900px) {
+  .partner-policy-layout {
+    grid-template-columns: 1fr;
+  }
+  .payment-method-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media(max-width:650px) {
+  .mock-card-fields,
+  .policy-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

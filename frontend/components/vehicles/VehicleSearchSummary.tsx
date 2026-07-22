@@ -1,7 +1,11 @@
+import { formatRentalDateTime } from "../../lib/rental-time";
+
 type Props = {
   pickupLocation: string;
   pickupDate?: string;
+  pickupTime?: string;
   returnDate?: string;
+  returnTime?: string;
   category?: string;
 };
 
@@ -15,10 +19,22 @@ const locations: Record<string, string> = {
 export default function VehicleSearchSummary(props: Props) {
   return (
     <section className="vehicle-summary">
-      <div><span>Pickup location</span><strong>{locations[props.pickupLocation] ?? "Cancun Airport"}</strong></div>
-      <div><span>Pickup</span><strong>{props.pickupDate || "Select date"}</strong></div>
-      <div><span>Return</span><strong>{props.returnDate || "Select date"}</strong></div>
-      <div><span>Category</span><strong>{props.category || "Any category"}</strong></div>
+      <div>
+        <span>Pickup location</span>
+        <strong>{locations[props.pickupLocation] ?? "Cancun Airport"}</strong>
+      </div>
+      <div>
+        <span>Pickup</span>
+        <strong>{formatRentalDateTime(props.pickupDate, props.pickupTime)}</strong>
+      </div>
+      <div>
+        <span>Return</span>
+        <strong>{formatRentalDateTime(props.returnDate, props.returnTime)}</strong>
+      </div>
+      <div>
+        <span>Category</span>
+        <strong>{props.category || "Any category"}</strong>
+      </div>
       <a href="/#search">Modify search</a>
     </section>
   );
