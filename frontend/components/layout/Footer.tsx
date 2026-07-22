@@ -1,23 +1,41 @@
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-white py-12">
+    <footer className="site-footer">
+      <div className="home-container footer-grid">
+        <div>
+          <div className="brand footer-brand">
+            <span className="brand-mark">EC</span>
+            <span>
+              <strong>Experience Cancun</strong>
+              <small>by Nella Travel Technologies</small>
+            </span>
+          </div>
+          <p>
+            A bilingual marketplace for local travel services, launching first
+            with trusted car rentals in Cancún.
+          </p>
+        </div>
 
-      <div className="max-w-7xl mx-auto text-center">
+        <div>
+          <h3>Services</h3>
+          <a href="#search">Car rentals</a>
+          <a href="#services">Airport transfers</a>
+          <a href="#services">Tours</a>
+          <a href="#services">Vacation rentals</a>
+        </div>
 
-        <h2 className="text-2xl font-bold">
-          Experience Cancun
-        </h2>
-
-        <p className="mt-4 text-gray-300">
-          Your Dream Vacation Starts Here
-        </p>
-
-        <p className="mt-8 text-sm text-gray-400">
-          © 2026 Experience Cancun. All rights reserved.
-        </p>
-
+        <div>
+          <h3>Customer care</h3>
+          <a href="#why-us">How it works</a>
+          <a href="#reviews">Reviews</a>
+          <a href="mailto:hello@experiencecancun.example">Contact</a>
+        </div>
       </div>
 
+      <div className="home-container footer-bottom">
+        <span>© 2026 Nella Travel Technologies</span>
+        <span>English · Español</span>
+      </div>
     </footer>
   );
 }

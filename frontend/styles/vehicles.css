@@ -1,0 +1,32 @@
+.vehicle-results-hero,.vehicle-detail-hero{padding-block:4.5rem;color:white;background:linear-gradient(135deg,var(--home-ocean-dark),var(--home-ocean))}
+.vehicle-results-hero h1,.vehicle-detail-copy h1{max-width:850px;margin:0;font-size:clamp(2.6rem,6vw,5rem);line-height:1;letter-spacing:-.04em}
+.vehicle-results-hero p,.vehicle-detail-copy p{max-width:720px;margin:1rem 0 0;color:#dcecf4;font-size:1.08rem;line-height:1.7}
+.vehicle-results-layout{padding-block:2rem 5rem}
+.vehicle-summary{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr auto;align-items:center;gap:1rem;padding:1.2rem;border:1px solid var(--home-border);border-radius:18px;background:white;box-shadow:0 8px 28px rgba(16,42,67,.07)}
+.vehicle-summary div span,.vehicle-summary div strong{display:block}.vehicle-summary div span{margin-bottom:.25rem;color:var(--home-muted);font-size:.78rem}
+.vehicle-summary a{padding:.75rem 1rem;border-radius:999px;color:var(--home-ocean);background:#eaf5f7;font-weight:900;text-align:center;text-decoration:none}
+.vehicle-content-grid{display:grid;grid-template-columns:280px minmax(0,1fr);align-items:start;gap:2rem;margin-top:2rem}
+.vehicle-filters{position:sticky;top:96px;padding:1.35rem;border:1px solid var(--home-border);border-radius:18px;background:white}
+.vehicle-filters h2{margin:0 0 1rem}.vehicle-filters label{display:grid;gap:.4rem;margin-top:1rem;font-size:.88rem;font-weight:800}
+.vehicle-filters select{min-height:46px;padding-inline:.75rem;border:1px solid var(--home-border);border-radius:11px;background:white;color:var(--home-ink);font:inherit}
+.results-heading{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}.results-heading span{color:var(--home-muted)}
+.results-heading h2{margin:.25rem 0 0;font-size:clamp(1.8rem,4vw,2.6rem)}.vehicle-list{display:grid;gap:1.2rem}
+.vehicle-card{display:grid;grid-template-columns:190px minmax(0,1fr) 220px;overflow:hidden;border:1px solid var(--home-border);border-radius:22px;background:white;box-shadow:0 8px 28px rgba(16,42,67,.06)}
+.vehicle-visual{display:grid;place-items:center;align-content:center;gap:.7rem;min-height:260px;background:#f4f8fa}.vehicle-visual span{font-size:5rem}.vehicle-visual small{color:var(--home-muted);font-weight:800}
+.vehicle-main,.vehicle-price{padding:1.35rem}.vehicle-title-row{display:flex;justify-content:space-between;gap:1rem}
+.vehicle-category{color:var(--home-turquoise);font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em}.vehicle-title-row h2{margin:.35rem 0 0;font-size:1.35rem}
+.availability-badge{height:fit-content;padding:.45rem .7rem;border-radius:999px;color:#11643b;background:#e8f8ee;font-size:.75rem;font-weight:900}
+.vehicle-specs{display:flex;flex-wrap:wrap;gap:.65rem 1rem;margin-top:1rem;color:var(--home-muted);font-size:.9rem}
+.vehicle-features,.detail-feature-list{display:grid;gap:.45rem;margin:1.2rem 0 0;padding:0;list-style:none}.vehicle-features{grid-template-columns:repeat(2,minmax(0,1fr));color:var(--home-muted);font-size:.88rem}
+.deposit-note{margin:1.2rem 0 0;color:var(--home-muted);font-size:.85rem}.vehicle-price{display:flex;flex-direction:column;border-left:1px solid var(--home-border);background:#fbfdfe}
+.vehicle-price>span,.vehicle-price>small{color:var(--home-muted)}.vehicle-price>strong{margin-top:.2rem;font-size:1.7rem}
+.price-total{margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--home-border)}.price-total span,.price-total strong{display:block}.price-total span{color:var(--home-muted);font-size:.82rem}.price-total strong{margin-top:.25rem;font-size:1.2rem}
+.vehicle-button{display:grid;place-items:center;margin-top:auto;min-height:50px;text-decoration:none}.reservation-note{margin-top:.65rem;text-align:center}
+.empty-results{padding:3rem;border:1px dashed var(--home-border);border-radius:20px;text-align:center}.empty-results a{color:var(--home-ocean);font-weight:900}
+.vehicle-detail-grid{display:grid;grid-template-columns:.8fr 1.2fr;align-items:center;gap:3rem}.vehicle-detail-visual{min-height:360px;display:grid;place-items:center;align-content:center;gap:1rem;border-radius:26px;color:var(--home-ink);background:white}.vehicle-detail-visual span{font-size:8rem}.vehicle-detail-visual small{color:var(--home-muted)}
+.vehicle-detail-specs{color:white}.detail-content-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;align-items:start;gap:2rem;padding-block:3rem 5rem}
+.detail-information{display:grid;gap:1.2rem}.detail-panel,.booking-summary-card{padding:1.6rem;border:1px solid var(--home-border);border-radius:20px;background:white}.detail-panel h2,.booking-summary-card h2{margin:0;font-size:1.65rem}.detail-panel p{color:var(--home-muted);line-height:1.7}.detail-feature-list{color:var(--home-muted);line-height:1.6}
+.booking-summary-card{position:sticky;top:96px;box-shadow:0 12px 35px rgba(16,42,67,.08)}.booking-summary-card dl{margin:1.2rem 0}.booking-summary-card dl div{display:flex;justify-content:space-between;gap:1rem;padding-block:.8rem;border-bottom:1px solid var(--home-border)}.booking-summary-card dt{color:var(--home-muted)}.booking-summary-card dd{margin:0;font-weight:900;text-align:right}.booking-summary-card>p{margin:.8rem 0 0;color:var(--home-muted);font-size:.82rem;line-height:1.5}
+@media(max-width:1000px){.vehicle-summary{grid-template-columns:repeat(2,1fr)}.vehicle-summary a{grid-column:1/-1}.vehicle-card{grid-template-columns:150px minmax(0,1fr)}.vehicle-price{grid-column:1/-1;border-top:1px solid var(--home-border);border-left:0}.vehicle-button{margin-top:1rem}}
+@media(max-width:800px){.vehicle-content-grid,.vehicle-detail-grid,.detail-content-grid{grid-template-columns:1fr}.vehicle-filters,.booking-summary-card{position:static}.vehicle-card{grid-template-columns:1fr}.vehicle-visual{min-height:190px}.vehicle-main{border-top:1px solid var(--home-border)}}
+@media(max-width:560px){.vehicle-summary,.vehicle-features{grid-template-columns:1fr}.results-heading{align-items:start;flex-direction:column}}

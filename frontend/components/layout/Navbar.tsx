@@ -1,30 +1,49 @@
+"use client";
+
+import { useState } from "react";
+
+const links = [
+  { href: "#services", label: "Services" },
+  { href: "#why-us", label: "Why us" },
+  { href: "#reviews", label: "Reviews" },
+];
+
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <header className="w-full bg-white shadow">
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-8 py-4">
+    <header className="site-header">
+      <div className="home-container nav-shell">
+        <a className="brand" href="/" aria-label="Experience Cancun home">
+          <span className="brand-mark">EC</span>
+          <span>
+            <strong>Experience Cancun</strong>
+            <small>Travel made simple</small>
+          </span>
+        </a>
 
-        <div>
-          <h1 className="text-3xl font-bold text-sky-700">
-            Experience Cancun
-          </h1>
-
-          <p className="text-gray-500 text-sm">
-            Your Dream Vacation Starts Here
-          </p>
-        </div>
-
-        <nav className="flex gap-8 font-medium">
-          <a href="#">Home</a>
-          <a href="#">Car Rentals</a>
-          <a href="#">Vacation Rentals</a>
-          <a href="#">Tours</a>
-          <a href="#">Contact</a>
-        </nav>
-
-        <button className="bg-sky-600 text-white px-6 py-3 rounded-lg hover:bg-sky-700">
-          Book Now
+        <button
+          className="nav-toggle"
+          type="button"
+          aria-expanded={open}
+          aria-controls="primary-navigation"
+          onClick={() => setOpen((value) => !value)}
+        >
+          Menu
         </button>
 
+        <nav
+          id="primary-navigation"
+          className={`primary-nav ${open ? "is-open" : ""}`}
+          aria-label="Primary navigation"
+        >
+          {links.map((link) => (
+            <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
+              {link.label}
+            </a>
+          ))}
+          <a className="nav-cta" href="#search">Start booking</a>
+        </nav>
       </div>
     </header>
   );

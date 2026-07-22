@@ -1,18 +1,19 @@
-export default function Home() {
+import Navbar from "../components/layout/Navbar";
+import Hero from "../components/home/Hero";
+import Services from "../components/home/Services";
+import WhyChooseUs from "../components/home/WhyChooseUs";
+import Testimonials from "../components/home/Testimonials";
+import Footer from "../components/layout/Footer";
+
+export default function HomePage() {
   return (
-    <main
-      style={{
-        padding: 40,
-        fontFamily: "Arial, Helvetica, sans-serif",
-      }}
-    >
-      <h1>Experience Cancun</h1>
-
-      <p>Welcome to Experience Cancun.</p>
-
-      <p>The Design System is installed successfully.</p>
-
-      <a href="/design-system">Open Design System →</a>
+    <main className="home-page">
+      <Navbar />
+      <Hero />
+      <Services />
+      <WhyChooseUs />
+      <Testimonials />
+      <Footer />
     </main>
   );
 }

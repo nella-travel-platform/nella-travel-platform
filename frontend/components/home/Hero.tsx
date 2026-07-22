@@ -1,21 +1,51 @@
+const categories = [
+  { value: "small", label: "Small · 3–4 passengers" },
+  { value: "medium", label: "Medium · 4–5 passengers" },
+  { value: "large", label: "Large · 5–7 passengers" },
+  { value: "extra-large", label: "Extra Large · 7–9 passengers" },
+  { value: "super-large", label: "Super Large · 10+ passengers" },
+];
+
 export default function Hero() {
   return (
-    <section className="bg-gradient-to-r from-sky-700 to-cyan-500 text-white text-center py-32">
+    <section className="hero-section">
+      <div className="home-container hero-content">
+        <div className="hero-copy">
+          <span className="eyebrow hero-eyebrow">Cancún, Mexico</span>
+          <h1>Everything you need for an unforgettable Cancún vacation.</h1>
+          <p>Book local car rentals, airport transfers, tours and vacation experiences through one trusted platform.</p>
+          <div className="hero-trust">
+            <span>✓ No hidden fees</span><span>✓ Local support</span><span>✓ Airport delivery</span>
+          </div>
+        </div>
 
-      <h1 className="text-6xl font-extrabold mb-6">
-        Experience Cancun
-      </h1>
-
-      <p className="text-2xl max-w-3xl mx-auto">
-        Your Dream Vacation Starts Here.
-        Discover car rentals, vacation homes,
-        airport transfers and unforgettable experiences.
-      </p>
-
-      <button className="mt-10 bg-yellow-400 text-black px-10 py-5 rounded-xl text-xl font-bold hover:bg-yellow-300">
-        Start Planning
-      </button>
-
+        <form id="search" className="search-card" action="/vehicles" method="get">
+          <div className="search-card-heading">
+            <span className="eyebrow">Find a vehicle</span>
+            <h2>Search available rentals</h2>
+          </div>
+          <label>Pickup location
+            <select name="pickupLocation" defaultValue="cancun-airport">
+              <option value="cancun-airport">Cancun Airport</option>
+              <option value="hotel-zone">Cancun Hotel Zone</option>
+              <option value="downtown-cancun">Downtown Cancun</option>
+              <option value="playa-del-carmen">Playa del Carmen</option>
+            </select>
+          </label>
+          <div className="form-grid">
+            <label>Pickup date<input name="pickupDate" type="date" required /></label>
+            <label>Return date<input name="returnDate" type="date" required /></label>
+          </div>
+          <label>Vehicle category
+            <select name="category" defaultValue="">
+              <option value="">Any category</option>
+              {categories.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+            </select>
+          </label>
+          <button className="primary-button full-width" type="submit">Search vehicles</button>
+          <p className="form-note">Reserve with one day&apos;s rent. The remaining balance is paid before or at pickup.</p>
+        </form>
+      </div>
     </section>
   );
 }

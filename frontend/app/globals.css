@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "../styles/experience-os.css";
+@import "../styles/home.css";
+@import "../styles/vehicles.css";
+
 html,
 body {
   margin: 0;
