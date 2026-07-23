@@ -4,6 +4,7 @@ import { FormEvent, useMemo, useState } from "react";
 import type { Vehicle } from "../../lib/vehicle-catalog";
 import PaymentSection from "./PaymentSection";
 import VehicleImage from "../vehicles/VehicleImage";
+import CancunInspirationStrip from "./CancunInspirationStrip";
 import { getPartnerRentalPolicy } from "../../lib/partner-rental-policy";
 import {
   calculateDeliveryFees,
@@ -232,6 +233,8 @@ export default function BookingWizard({
         </div>
 
         <form onSubmit={handleSubmit}>
+          <CancunInspirationStrip />
+
           {step === 1 && (
             <div className="booking-step-panel">
               <span className="eyebrow">Step 1 of 3 · Driver details</span>
@@ -491,7 +494,9 @@ export default function BookingWizard({
                 </ul>
               </div>
 
-              <div className="checkout-total-summary">
+              <section className="checkout-total-panel">
+                <span className="eyebrow">Payment totals</span>
+                <div className="checkout-total-summary">
                 <div>
                   <span>Amount Due Now</span>
                   <strong>
@@ -512,7 +517,8 @@ export default function BookingWizard({
                     Remaining Rental Balance plus the separate Damage Deposit.
                   </small>
                 </div>
-              </div>
+                </div>
+              </section>
 
               <label className="terms-box">
                 <input

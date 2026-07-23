@@ -27,7 +27,7 @@ export const bookingExtras: BookingExtraDefinition[] = [
     id: "insurance",
     name: "Full coverage",
     description:
-      "Full Coverage Insurance is included. In the event of an accident or damage, the customer remains responsible for the policy deductible and for damage costs below the deductible.",
+      "Full Coverage Insurance is included. In the event of an accident or damage, the customer remains responsible for the policy deductible or for damage costs below the deductible.",
     chargeMode: "included",
     amount: 0,
   },
