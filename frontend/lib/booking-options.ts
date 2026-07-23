@@ -25,8 +25,9 @@ export const bookingExtras: BookingExtraDefinition[] = [
   },
   {
     id: "insurance",
-    name: "Additional coverage",
-    description: "Optional enhanced insurance coverage for the trip.",
+    name: "Full coverage",
+    description:
+      "Full Coverage Insurance is included. In the event of an accident or damage, the customer remains responsible for the policy deductible and for damage costs below the deductible.",
     chargeMode: "included",
     amount: 0,
   },

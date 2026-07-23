@@ -1,0 +1,199 @@
+/* Homepage hierarchy */
+.hero-copy h1 {
+  max-width: 760px;
+  font-size: clamp(3.2rem, 6.6vw, 6.5rem) !important;
+  line-height: .98 !important;
+  letter-spacing: -.045em;
+}
+
+.hero-copy p {
+  max-width: 700px;
+  font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+}
+
+.attraction-section {
+  padding: clamp(3.5rem, 7vw, 6rem) 0;
+  background: #fff;
+}
+
+.attraction-heading {
+  max-width: 760px;
+  margin-bottom: 1.75rem;
+}
+
+.attraction-heading h2 {
+  margin: .45rem 0 .7rem;
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  line-height: 1.03;
+  color: var(--home-ink);
+}
+
+.attraction-heading p {
+  color: var(--home-muted);
+  line-height: 1.65;
+}
+
+.attraction-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.attraction-card {
+  grid-column: span 4;
+  overflow: hidden;
+  min-width: 0;
+  border: 1px solid var(--home-border);
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 12px 35px rgba(16, 42, 67, .08);
+}
+
+.attraction-card:nth-child(4),
+.attraction-card:nth-child(5) {
+  grid-column: span 6;
+}
+
+.attraction-card img {
+  display: block;
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  background: #dcecf4;
+}
+
+.attraction-card div {
+  padding: 1rem 1.1rem 1.2rem;
+}
+
+.attraction-card h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.attraction-card p {
+  margin: .35rem 0 0;
+  color: var(--home-muted);
+  line-height: 1.5;
+}
+
+/* Search/filter containment */
+.vehicle-filters,
+.vehicle-filters form,
+.vehicle-filters label,
+.vehicle-filters select {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.vehicle-filters select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.vehicle-content-grid {
+  min-width: 0;
+}
+
+.vehicle-visual {
+  overflow: hidden;
+}
+
+.vehicle-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 245px;
+  object-fit: cover;
+}
+
+/* Consistent reservation summary labels */
+.deposit-note strong {
+  white-space: nowrap;
+}
+
+.booking-summary-card dt {
+  color: var(--home-muted);
+}
+
+.booking-summary-card .deposit-row dt,
+.booking-summary-card .deposit-row dd {
+  color: white;
+}
+
+/* Driver page introduction */
+.step-intro {
+  max-width: 720px;
+  margin: -.6rem 0 1.6rem;
+  color: var(--home-muted);
+  line-height: 1.55;
+}
+
+/* Notifications styled to match payment choices */
+.notification-choice {
+  padding: 1.25rem;
+  border: 1px solid var(--home-border);
+  border-radius: 16px;
+  background: #fbfdfe;
+}
+
+.notification-methods {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  margin-top: .8rem;
+}
+
+.notification-methods label {
+  display: grid !important;
+  grid-template-columns: 20px minmax(0, 1fr) !important;
+  align-items: center !important;
+  min-height: 68px !important;
+  gap: .7rem !important;
+  padding: .9rem 1rem !important;
+}
+
+.notification-methods input[type="radio"] {
+  appearance: auto;
+  width: 18px !important;
+  height: 18px !important;
+  min-height: 18px !important;
+  margin: 0 !important;
+}
+
+.notification-choice > small {
+  display: block;
+  margin-top: .8rem;
+}
+
+/* Delivery appears only when charge/quote exists; this keeps it visually concise. */
+.delivery-fee-summary {
+  background: var(--home-sand);
+}
+
+/* Coverage card language */
+.booking-extra-card {
+  min-width: 0;
+}
+
+@media (max-width: 1000px) {
+  .attraction-card,
+  .attraction-card:nth-child(4),
+  .attraction-card:nth-child(5) {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-copy h1 {
+    font-size: clamp(3rem, 15vw, 4.8rem) !important;
+  }
+
+  .attraction-card,
+  .attraction-card:nth-child(4),
+  .attraction-card:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+
+  .notification-methods {
+    grid-template-columns: 1fr !important;
+  }
+}

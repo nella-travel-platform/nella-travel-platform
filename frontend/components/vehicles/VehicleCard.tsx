@@ -1,4 +1,5 @@
 import type { Vehicle } from "../../lib/vehicle-catalog";
+import VehicleImage from "./VehicleImage";
 
 type Props = {
   vehicle: Vehicle;
@@ -41,7 +42,11 @@ export default function VehicleCard({
   return (
     <article className="vehicle-card">
       <div className="vehicle-visual">
-        <span>{vehicle.image}</span>
+        <VehicleImage
+          vehicleName={vehicle.name}
+          category={vehicle.categoryLabel}
+          className="vehicle-photo"
+        />
         <small>{vehicle.categoryLabel}</small>
       </div>
 
@@ -68,7 +73,7 @@ export default function VehicleCard({
         </ul>
 
         <p className="deposit-note">
-          Refundable damage deposit:{" "}
+          Damage Deposit:{" "}
           <strong>{currency.format(vehicle.damageDeposit)}</strong>
         </p>
       </div>

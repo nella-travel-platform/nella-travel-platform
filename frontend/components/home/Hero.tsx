@@ -1,6 +1,7 @@
 "use client";
 
 import { serviceLocations } from "../../lib/location-delivery";
+import AttractionGallery from "./AttractionGallery";
 
 type InitialSearch = {
   pickupLocation?: string;
@@ -30,16 +31,17 @@ export default function Hero({ initialSearch = {} }: Props) {
       <div className="home-container hero-content">
         <div className="hero-copy">
           <span className="eyebrow hero-eyebrow">Cancún, Mexico</span>
-          <h1>Everything you need for an unforgettable Cancún vacation.</h1>
+          <h1>Your Cancún trip starts here.</h1>
           <p>
-            Book local car rentals, airport transfers, tours and vacation
-            experiences through one trusted platform.
+            Reserve a local vehicle with clear pricing, flexible locations and true 24-hour rental days.
           </p>
           <div className="hero-trust">
             <span>✓ True 24-hour rental days</span>
             <span>✓ No hidden fees</span>
             <span>✓ Airport delivery</span>
           </div>
+
+          <AttractionGallery />
         </div>
 
         <form id="search" className="search-card" action="/vehicles" method="get">

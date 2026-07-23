@@ -1,0 +1,254 @@
+/* Keep the full homepage presentation inside the blue hero. */
+.hero-section {
+  min-height: auto !important;
+  padding: 1.25rem 0 2rem !important;
+}
+
+.hero-content {
+  align-items: start !important;
+}
+
+.hero-copy {
+  padding-top: .5rem !important;
+}
+
+.hero-copy h1 {
+  margin-top: .55rem !important;
+  margin-bottom: .7rem !important;
+  font-size: clamp(3rem, 5.5vw, 5.4rem) !important;
+  line-height: .94 !important;
+}
+
+.hero-copy > p {
+  margin-bottom: .75rem !important;
+  font-size: clamp(1rem, 1.45vw, 1.22rem) !important;
+}
+
+.hero-trust {
+  margin-top: .8rem !important;
+  gap: .7rem 1.2rem !important;
+  font-size: .96rem;
+}
+
+/* Compact, eye-catching destination mosaic under the hero message. */
+.hero-attraction-gallery {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: 76px;
+  gap: .55rem;
+  max-width: 760px;
+  margin-top: 1rem;
+}
+
+.hero-attraction-card {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .08);
+}
+
+.hero-attraction-card-1 {
+  grid-column: span 5;
+  grid-row: span 2;
+}
+
+.hero-attraction-card-2,
+.hero-attraction-card-3 {
+  grid-column: span 3;
+}
+
+.hero-attraction-card-4,
+.hero-attraction-card-5 {
+  grid-column: span 2;
+}
+
+.hero-attraction-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .25s ease;
+}
+
+.hero-attraction-card:hover img {
+  transform: scale(1.04);
+}
+
+.hero-attraction-card figcaption {
+  position: absolute;
+  left: .55rem;
+  bottom: .5rem;
+  padding: .25rem .48rem;
+  border-radius: 999px;
+  background: rgba(7, 34, 54, .82);
+  color: white;
+  font-size: .72rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Search panel and filters cannot overflow their card. */
+.search-card,
+.form-grid,
+.form-grid label,
+.search-card select,
+.search-card input,
+.vehicle-filters,
+.vehicle-filters form,
+.vehicle-filters label,
+.vehicle-filters select {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.vehicle-filters {
+  overflow: hidden;
+}
+
+.vehicle-filters select {
+  width: 100% !important;
+}
+
+/* Use an actual Toyota Avanza throughout search and checkout. */
+.vehicle-photo {
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.booking-vehicle-image {
+  width: 84px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--home-border);
+}
+
+/* Give the View Vehicle call-to-action breathing room. */
+.vehicle-price .price-total {
+  margin-bottom: 1rem !important;
+}
+
+.vehicle-button {
+  margin-top: .45rem !important;
+}
+
+/* Consistent typography and summaries. */
+.booking-price-card,
+.booking-step-panel,
+.vehicle-card,
+.vehicle-summary-card {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.pickup-total-row {
+  margin-top: .35rem;
+  padding-top: 1rem !important;
+  border-top: 2px solid var(--home-ink) !important;
+}
+
+.pickup-total-row dt,
+.pickup-total-row dd {
+  color: var(--home-ink) !important;
+  font-weight: 900;
+}
+
+.checkout-total-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.checkout-total-summary > div {
+  padding: 1.1rem;
+  border: 1px solid var(--home-border);
+  border-radius: 15px;
+  background: #f7fafc;
+}
+
+.checkout-total-summary span,
+.checkout-total-summary small {
+  display: block;
+  color: var(--home-muted);
+}
+
+.checkout-total-summary strong {
+  display: block;
+  margin-top: .35rem;
+  color: var(--home-ink);
+  font-size: 1.35rem;
+}
+
+.deposit-disclaimer {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #efd8a9;
+  border-radius: 14px;
+  background: #fff9ed;
+  color: var(--home-muted);
+  line-height: 1.5;
+}
+
+.deposit-disclaimer strong {
+  color: var(--home-ink);
+}
+
+.deposit-disclaimer p {
+  margin: .45rem 0 0;
+}
+
+/* Customer-facing full coverage message. */
+.extra-option small {
+  line-height: 1.45;
+}
+
+@media (max-width: 980px) {
+  .hero-attraction-gallery {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-rows: 72px;
+  }
+
+  .hero-attraction-card-1 {
+    grid-column: span 3;
+  }
+
+  .hero-attraction-card-2,
+  .hero-attraction-card-3,
+  .hero-attraction-card-4,
+  .hero-attraction-card-5 {
+    grid-column: span 3;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-attraction-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 90px;
+  }
+
+  .hero-attraction-card,
+  .hero-attraction-card-1,
+  .hero-attraction-card-2,
+  .hero-attraction-card-3,
+  .hero-attraction-card-4,
+  .hero-attraction-card-5 {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .hero-attraction-card-1 {
+    grid-column: span 2;
+  }
+
+  .checkout-total-summary {
+    grid-template-columns: 1fr;
+  }
+}

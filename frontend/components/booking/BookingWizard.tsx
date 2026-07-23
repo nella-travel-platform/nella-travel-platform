@@ -3,6 +3,7 @@
 import { FormEvent, useMemo, useState } from "react";
 import type { Vehicle } from "../../lib/vehicle-catalog";
 import PaymentSection from "./PaymentSection";
+import VehicleImage from "../vehicles/VehicleImage";
 import { getPartnerRentalPolicy } from "../../lib/partner-rental-policy";
 import {
   calculateDeliveryFees,
@@ -233,8 +234,9 @@ export default function BookingWizard({
         <form onSubmit={handleSubmit}>
           {step === 1 && (
             <div className="booking-step-panel">
-              <span className="eyebrow">Step 1 of 3</span>
-              <h2>Driver and contact information</h2>
+              <span className="eyebrow">Step 1 of 3 · Driver details</span>
+              <h2>Who will be driving?</h2>
+              <p className="step-intro">Enter the primary driver and the best contact information for reservation updates.</p>
 
               <div className="booking-form-grid">
                 <label>
@@ -360,7 +362,8 @@ export default function BookingWizard({
                 </div>
               </div>
 
-              <div className="delivery-fee-summary">
+              {(delivery.totalFee > 0 || delivery.requiresQuote) && (
+                <div className="delivery-fee-summary">
                 <span className="eyebrow">Pickup and return delivery</span>
                 <h3>
                   {getServiceLocation(pickupLocation).label} →{" "}
@@ -379,6 +382,7 @@ export default function BookingWizard({
                   </p>
                 )}
               </div>
+              )}
 
               <div className="notification-choice">
                 <span className="eyebrow">Reservation notifications</span>
@@ -407,17 +411,14 @@ export default function BookingWizard({
                   ))}
                 </div>
                 <small>
-                  Text / WhatsApp is selected by default. Message and carrier
-                  rates may apply. You may change this preference later.
+                  Text / WhatsApp is selected by default for reservation updates. Message and carrier rates may apply.
                 </small>
               </div>
 
               <div className="balance-separation-note">
-                <strong>Important:</strong> the remaining rental balance and the
-                refundable damage deposit are separate, independent charges.
-                When the customer chooses deposit-only, both are due at pickup,
-                but the damage deposit is not included in the remaining rental
-                balance shown above.
+                <strong>Payment at pickup:</strong> the Remaining Rental Balance and
+                Damage Deposit are separate charges. The Damage Deposit is not
+                included in the Remaining Rental Balance.
               </div>
 
               <div className="payment-choice">
@@ -454,7 +455,7 @@ export default function BookingWizard({
                     <strong>Pay rental balance now</strong>
                     <small>
                       Pay the full rental amount of {currency.format(estimatedTotal)} now.
-                      The additional refundable damage deposit remains due at pickup and is not included in this amount.
+                      The Damage Deposit remains due at pickup as a separate charge.
                     </small>
                   </span>
                 </label>
@@ -490,6 +491,29 @@ export default function BookingWizard({
                 </ul>
               </div>
 
+              <div className="checkout-total-summary">
+                <div>
+                  <span>Amount Due Now</span>
+                  <strong>
+                    {amountDueNow === null
+                      ? "Select payment preference"
+                      : currency.format(amountDueNow)}
+                  </strong>
+                </div>
+                <div>
+                  <span>Amount Due at Pickup</span>
+                  <strong>
+                    {currency.format(
+                      (amountDueNow === estimatedTotal ? 0 : remainingBalance) +
+                        vehicle.damageDeposit,
+                    )}
+                  </strong>
+                  <small>
+                    Remaining Rental Balance plus the separate Damage Deposit.
+                  </small>
+                </div>
+              </div>
+
               <label className="terms-box">
                 <input
                   type="checkbox"
@@ -498,7 +522,8 @@ export default function BookingWizard({
                 />
                 <span>
                   I confirm the information is accurate and understand the
-                  reservation, remaining-balance and refundable-deposit terms.
+                  reservation, Remaining Rental Balance, Damage Deposit,
+                  insurance-deductible and vehicle-condition terms.
                 </span>
               </label>
             </div>
@@ -523,7 +548,11 @@ export default function BookingWizard({
       <aside className="booking-price-card">
         <span className="eyebrow">Your reservation</span>
         <div className="booking-vehicle">
-          <span>{vehicle.image}</span>
+          <VehicleImage
+            vehicleName={vehicle.name}
+            category={vehicle.categoryLabel}
+            className="booking-vehicle-image"
+          />
           <div>
             <strong>{vehicle.name}</strong>
             <small>{vehicle.categoryLabel}</small>
@@ -563,11 +592,11 @@ export default function BookingWizard({
           {step < 3 && (
             <>
               <div className="deposit-row">
-                <dt>Pay to reserve — one rental day</dt>
+                <dt>Pay Now to Reserve</dt>
                 <dd>{currency.format(reservationDeposit)}</dd>
               </div>
               <div>
-                <dt>Estimated remaining rental balance</dt>
+                <dt>Remaining Rental Balance</dt>
                 <dd>{currency.format(estimatedTotal - reservationDeposit)}</dd>
               </div>
             </>
@@ -585,22 +614,42 @@ export default function BookingWizard({
                 <dd>{currency.format(amountDueNow)}</dd>
               </div>
               <div>
-                <dt>Remaining rental balance at pickup</dt>
+                <dt>Remaining Rental Balance</dt>
                 <dd>{currency.format(remainingBalance)}</dd>
               </div>
             </>
           )}
           <div>
-            <dt>Additional refundable damage deposit due at pickup</dt>
+            <dt>Damage Deposit</dt>
             <dd>{currency.format(vehicle.damageDeposit)}</dd>
+          </div>
+          <div className="pickup-total-row">
+            <dt>Amount Due at Pickup</dt>
+            <dd>
+              {currency.format(
+                (step === 3 && amountDueNow === estimatedTotal
+                  ? 0
+                  : remainingBalance) + vehicle.damageDeposit,
+              )}
+            </dd>
           </div>
         </dl>
 
-        <p>
-          The remaining rental balance and refundable damage deposit are
-          separate charges. The damage deposit is not included in the remaining
-          balance. Both may be due at pickup depending on the payment selection.
-        </p>
+        <div className="deposit-disclaimer">
+          <strong>Damage Deposit terms</strong>
+          <p>
+            The Damage Deposit is fully refundable when the vehicle is returned
+            in the same condition in which it was received, subject to the
+            documented rental agreement and inspection.
+          </p>
+          <p>
+            When damage occurs, some or all of the Damage Deposit may be applied
+            toward repair costs, the insurance-policy deductible, or damage
+            costs that fall below the deductible. Any additional responsibility
+            is determined under the rental agreement and applicable insurance
+            terms.
+          </p>
+        </div>
       </aside>
     </div>
   );
